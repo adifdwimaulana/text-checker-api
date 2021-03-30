@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
+const config = require('./config/db.config');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,6 +23,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// Connect to mongoDB
+mongoose.connect(config.url, config.options);
+const db = mongoose.connection;
+db.on('open', console.info.bind(console, 'Connection to the database was successfully established!'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

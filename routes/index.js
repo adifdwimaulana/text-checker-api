@@ -9,6 +9,6 @@ router.get('/', function(req, res, next) {
 
 /* Word Router */
 router.get('/api/word/list', wordController.list);
-router.get('/api/word/search', wordController.searchPartial);
+router.post('/api/word/search', wordController.searchPartial);
 
 module.exports = router;

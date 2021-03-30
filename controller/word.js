@@ -24,7 +24,9 @@ async function searchPartial(req, res){
             "name": {
                 "$regex": input,
                 "$options": "i"
-            }
+            },
+        }, {
+            "name": true,
         }).limit(10);
 
         return res.status(200).json({

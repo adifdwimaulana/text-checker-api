@@ -18,7 +18,7 @@ async function list(req, res){
 
 async function searchPartial(req, res){
     const { input } = req.body;
-
+    console.log(input, typeof(input))
     try {
         const words = await Word.find({
             "name": {
@@ -29,9 +29,14 @@ async function searchPartial(req, res){
             "name": true,
         }).limit(10);
 
+        let result = {
+            words,
+            exist: words.length > 0 ? true : false
+        }
+
         return res.status(200).json({
             status: 200,
-            result: words
+            result
         })
 
     } catch (e) {

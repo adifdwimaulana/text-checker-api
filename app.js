@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Cors config
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://192.168.43.106', 'https://text-checker-qqfw8b6c7-adifdwimaulana.vercel.app/'], 
+  origin: ['http://localhost:3000', 'http://192.168.43.106', 'https://text-checker-qqfw8b6c7-adifdwimaulana.vercel.app', 'http://0.0.0.0'], 
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200
 }

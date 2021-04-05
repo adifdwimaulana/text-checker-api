@@ -60,7 +60,7 @@ async function searchHighlight(req, res){
         let results = []
         words.forEach((result) => results.push(result.name))
 
-        let intersection = input.filter(x => results.includes(x))
+        let intersection = input.filter(x => !results.includes(x))
 
         return res.status(200).json({
             status: 200,

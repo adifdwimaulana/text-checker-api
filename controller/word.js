@@ -18,16 +18,16 @@ async function list(req, res){
 
 async function searchPartial(req, res){
     const { input } = req.body;
-    console.log(input, typeof(input))
+    
     try {
         const words = await Word.find({
             "name": {
-                "$regex": input,
+                "$regex": `^${input}`,
                 "$options": "i"
             },
         }, {
             "name": true,
-        }).limit(10);
+        })
 
         let result = {
             words,
@@ -47,9 +47,20 @@ async function searchPartial(req, res){
     }
 }
 
-async function searchFull(req, res){
-    try {
+async function searchHighlight(req, res){
+    const { input } = req.body
 
+    try {
+        const words = await Word.find({
+            "name": { "$in": input }
+        }, {
+            "name": true
+    })
+
+        return res.status(200).json({
+            status: 200,
+            result: words
+        })
     } catch (e) {
         return res.status(400).json({
             status: 400,
@@ -61,5 +72,5 @@ async function searchFull(req, res){
 module.exports = {
     list,
     searchPartial,
-    searchFull,
+    searchHighlight,
 }

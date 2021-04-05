@@ -18,7 +18,7 @@ async function list(req, res){
 
 async function searchPartial(req, res){
     const { input } = req.body;
-    
+
     try {
         const words = await Word.find({
             "name": {
@@ -27,7 +27,7 @@ async function searchPartial(req, res){
             },
         }, {
             "name": true,
-        })
+        }).limit(10)
 
         let result = {
             words,
@@ -55,11 +55,16 @@ async function searchHighlight(req, res){
             "name": { "$in": input }
         }, {
             "name": true
-    })
+        })
+
+        let results = []
+        words.forEach((result) => results.push(result.name))
+
+        let intersection = input.filter(x => results.includes(x))
 
         return res.status(200).json({
             status: 200,
-            result: words
+            result: intersection,
         })
     } catch (e) {
         return res.status(400).json({
